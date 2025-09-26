@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Madison Rottman — Resume</title>
+  <meta name="description" content="Resume website for Madison Rottman: education, projects, experience, and contact." />
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    /* ===== CSS RESET (lightweight) ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; line-height: 1.6; color: var(--fg); background: var(--bg); }
+    img { max-width: 100%; display: block; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== THEME ===== */
+    :root {
+      --bg: #0b1020;           /* deep slate */
+      --panel: #0f172a;        /* slate-900 */
+      --panel-2: #111827;      /* near black */
+      --fg: #e5e7eb;           /* gray-200 */
+      --muted: #9ca3af;        /* gray-400 */
+      --primary: #60a5fa;      /* blue-400 */
+      --accent: #a78bfa;       /* violet-400 */
+      --ring: rgba(96,165,250,.35);
+      --chip: rgba(255,255,255,.06);
+      --shadow: 0 10px 30px rgba(2,6,23,.4);
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg:#f8fafc; --panel:#ffffff; --panel-2:#f1f5f9; --fg:#0f172a; --muted:#475569; --primary:#1d4ed8; --accent:#7c3aed; --chip: rgba(15,23,42,.06); --shadow: 0 10px 30px rgba(2,6,23,.07);} }
+
+    /* ===== LAYOUT ===== */
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    .card { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    header.hero { display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: center; padding: 28px; position: relative; overflow: hidden; }
+    .avatar { width: 110px; height: 110px; border-radius: 18px; object-fit: cover; border: 2px solid rgba(255,255,255,.1); }
+    .name { font-size: clamp(26px, 3vw, 36px); font-weight: 800; letter-spacing: .2px; }
+    .tagline { color: var(--muted); margin-top: 6px; }
+    .hero-actions { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; background: var(--chip); border: 1px solid rgba(255,255,255,.08); color: var(--fg); font-weight: 600; }
+    .btn.primary { background: linear-gradient(180deg, rgba(96,165,250,.2), rgba(96,165,250,.05)); border-color: rgba(96,165,250,.35); box-shadow: 0 6px 20px var(--ring); }
+
+    /* nav */
+    nav { display: flex; gap: 12px; flex-wrap: wrap; }
+    nav a { padding: 8px 10px; border-radius: 10px; background: var(--chip); border: 1px solid rgba(255,255,255,.06); font-weight: 600; color: var(--muted); }
+    nav a:hover { color: var(--fg); }
+
+    /* grid */
+    .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 20px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } header.hero { grid-template-columns: 1fr; } .avatar { width: 90px; height: 90px; } }
+
+    /* sections */
+    section { padding: 22px 24px; }
+    section h2 { font-size: 20px; margin: 0 0 14px; letter-spacing: .3px; }
+    .subtle { color: var(--muted); }
+
+    /* chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { padding: 6px 10px; background: var(--chip); border: 1px solid rgba(255,255,255,.08); border-radius: 999px; font-weight: 600; font-size: 13px; color: var(--fg); }
+
+    /* timeline */
+    .timeline { display: grid; gap: 14px; }
+    .item { padding: 14px; background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 14px; }
+    .item h3 { margin: 0 0 6px; font-size: 16px; }
+    .item .meta { display: flex; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+    .item ul { margin: 10px 0 0 20px; }
+
+    /* sidebar cards */
+    .side { display: grid; gap: 20px; }
+    .mini { padding: 16px; }
+
+    /* footer */
+    footer { text-align: center; color: var(--muted); font-size: 14px; padding: 24px 0 40px; }
+
+    /* print styles */
+    @media print {
+      :root { --bg: #fff; --panel:#fff; --panel-2:#fff; --fg:#000; --muted:#333; --chip:#efefef; --primary:#000; --shadow:none; }
+      body { background: #fff; }
+      .wrap { padding: 0; }
+      .card, .btn, nav a { box-shadow: none; background: transparent; border: none; }
+      .btn, .hero-actions, nav, footer { display: none !important; }
+      a { color: inherit; text-decoration: none; }
+      header.hero { padding: 0 0 8px; }
+      section { padding: 10px 0; }
+      .grid { gap: 10px; }
+    }
+  </style>
+  <script>
+    // Smooth-scroll for in-page links
+    addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          const id = a.getAttribute('href');
+          const el = document.querySelector(id);
+          if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        });
+      });
+    });
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Madison Rottman",
+    "jobTitle": "Student • Public Relations & Microeconomics",
+    "url": "https://example.com/",
+    "email": "mailto:mtr149@miami.edu",
+    "alumniOf": {"@type":"CollegeOrUniversity","name":"University of Miami"},
+    "sameAs": ["https://www.linkedin.com/in/your-handle", "https://github.com/your-handle"]
+  }
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <!-- ===== HERO ===== -->
+    <header class="hero card" id="top">
+      <img class="avatar" src="./IMG_9398.jpeg" alt="Headshot of Madison Rottman" />
+      <div>
+        <div class="name">Madison Rottman</div>
+        <div class="tagline">University of Miami ’29 · Communications & Economics · Design + Research</div>
+        <div class="hero-actions">
+          <a class="btn primary" href="#contact" aria-label="Jump to contact">Contact</a>
+          <a class="btn" href="#experience">Experience</a>
+          <a class="btn" href="#projects">Projects</a>
+          <button class="btn" onclick="window.print()" aria-label="Print or save as PDF">Print PDF</button>
+        </div>
+        <div style="margin-top:12px">
+          <nav aria-label="Primary">
+            <a href="#summary">Summary</a>
+            <a href="#skills">Skills</a>
+            <a href="#experience">Experience</a>
+            <a href="#education">Education</a>
+            <a href="#projects">Projects</a>
+            <a href="#awards">Awards</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- ===== MAIN ===== -->
+      <main class="main">
+        <section id="summary" class="card">
+          <h2>Summary</h2>
+          <p>
+            Curious and organized student blending <strong>public relations</strong>, <strong>microeconomics</strong>, and <strong>design research</strong>.
+            Experienced in crafting concise study materials, analyzing user behavior, and presenting clear narratives.
+            Seeking internships where communication strategy meets data-driven decision-making.
+          </p>
+        </section>
+
+        <section id="skills" class="card">
+          <h2>Skills</h2>
+          <div class="chips" aria-label="Skills list">
+            <span class="chip">Writing & Editing</span>
+            <span class="chip">Content Strategy</span>
+            <span class="chip">Market Research</span>
+            <span class="chip">Public Speaking</span>
+            <span class="chip">Excel / Google Sheets</span>
+            <span class="chip">Figma</span>
+            <span class="chip">HTML/CSS</span>
+            <span class="chip">Data Visualization</span>
+          </div>
+        </section>
+
+        <section id="experience" class="card">
+          <h2>Professional Experience</h2>
+          <div class="timeline">
+            <article class="item">
+              <h3>Financial Planning & Analysis Intern · <span class="subtle">Maller Wealth Advisors, Inc.</span></h3>
+              <div class="meta"> <span>May 2025 – Jun 2025</span> <span>• Cockeysville, MD</span> </div>
+              <ul>
+                <li>Shadowed experienced financial analysts and gained hands‑on exposure to investment strategies and financial planning.</li>
+                <li>Built foundational understanding of retirement planning, stock market analysis, and tax considerations.</li>
+                <li>Deepened appreciation for disciplined investing and conservative financial decision‑making.</li>
+              </ul>
+            </article>
+            <article class="item">
+              <h3>Architectural Intern · <span class="subtle">Vincent Greene Architects</span></h3>
+              <div class="meta"> <span>Jun 2024 – Aug 2024</span> <span>• Baltimore, MD</span> </div>
+              <ul>
+                <li>Shadowed the lead architect across residential projects, gaining insight into design, project planning, and site development.</li>
+                <li>Observed project planning and execution from schematic through finish selection.</li>
+                <li>Collaborated across disciplines, strengthening understanding of interior design principles and architectural processes.</li>
+              </ul>
+            </article>
+            <article class="item">
+              <h3>Team Member · <span class="subtle">The Women’s Board of The Johns Hopkins Hospital (Renewal)</span></h3>
+              <div class="meta"> <span>Jul 2023 – Jul 2024</span> <span>• Cockeysville, MD</span> </div>
+              <ul>
+                <li>Supported an upscale resale boutique whose proceeds benefit Johns Hopkins Hospital.</li>
+                <li>Sorted and evaluated donated items, organized merchandise, and assisted customers to ensure a high‑end experience.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="education" class="card">
+          <h2>Education</h2>
+          <div class="timeline">
+            <article class="item">
+              <h3>University of Miami — <span class="subtle">B.A., Communications</span></h3>
+              <div class="meta"> <span>2025 – 2029 (expected)</span> <span>• Coral Gables, FL</span> </div>
+            </article>
+            <article class="item">
+              <h3>McDonogh School — <span class="subtle">High School Diploma</span></h3>
+              <div class="meta"> <span>2013 – 2025</span> <span>• Owings Mills, MD</span> </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="projects" class="card">
+          <h2>Projects</h2>
+          <div class="timeline">
+            <article class="item">
+              <h3>“Coins as Culture” — Design & Rhetoric Mini-Study</h3>
+              <ul>
+                <li>Built a framework spanning <strong>Technological Evolution</strong>, <strong>Use & Functionality</strong>, and <strong>Popular Media</strong>.</li>
+                <li>Produced a visual study guide; distilled complex sources into concise, printable references.</li>
+              </ul>
+            </article>
+            <article class="item">
+              <h3>PR Chapter Study Guide Templates</h3>
+              <ul>
+                <li>Created polished, Google‑Doc‑ready modules with comparison charts and graphics placeholders.</li>
+                <li>Improved peer comprehension and reduced study time via consistent formatting.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="awards" class="card">
+          <h2>Awards</h2>
+          <ul>
+            <li>Honor Roll — <span class="subtle">Fall 2021 – Spring 2024</span></li>
+            <li>Deans List — <span class="subtle">Fall 2024 – Spring 2025</span></li>
+            <li>The National Society of High School Scholars — <span class="subtle">Fall 2023 – Spring 2024</span></li>
+          </ul>
+        </section>
+      <section id="leadership" class="card">
+          <h2>Leadership & Involvements</h2>
+          <div class="timeline">
+            <article class="item">
+              <h3>Hope for Johns Hopkins Kids</h3>
+              <div class="meta"><span>Club Founder & Leader</span> <span>• Aug 2023 – Jun 2025</span></div>
+            </article>
+            <article class="item">
+              <h3>Varsity Girls Golf Team</h3>
+              <div class="meta"><span>Team Member; Captain 2024–2025</span> <span>• Feb 2022 – May 2025</span></div>
+            </article>
+            <article class="item">
+              <h3>Varsity Girls Tennis Team</h3>
+              <div class="meta"><span>Team Member; Captain 2024–2025</span> <span>• Aug 2021 – Nov 2024</span></div>
+            </article>
+            <article class="item">
+              <h3>McDonogh Student‑Athlete Leadership Academy</h3>
+              <div class="meta"><span>Academy Member</span> <span>• Aug 2023 – Jun 2024</span></div>
+            </article>
+            <article class="item">
+              <h3>Greatest Good McDonogh Council</h3>
+              <div class="meta"><span>Council Member</span> <span>• Aug 2024 – Jun 2025</span></div>
+            </article>
+            <article class="item">
+              <h3>Peer Education</h3>
+              <div class="meta"><span>Peer Educator</span> <span>• Aug 2023 – Jun 2025</span></div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="side">
+        <section class="card mini" id="contact">
+          <h2>Contact</h2>
+          <p>
+            <a href="mailto:mtr149@miami.edu">mtr149@miami.edu</a><br/>
+            <span>443‑841‑0294</span>
+          </p>
+          <p class="subtle">Baltimore, MD · Open to internships</p>
+        </section>
+
+        <section class="card mini">
+          <h2>Strengths</h2>
+          <ul>
+            <li>Clear, concise writing</li>
+            <li>Fast synthesis of sources</li>
+            <li>Thoughtful visuals & formatting</li>
+          </ul>
+        </section>
+
+        <section class="card mini">
+          <h2>Keywords</h2>
+          <div class="chips">
+            <span class="chip">PR</span>
+            <span class="chip">Microeconomics</span>
+            <span class="chip">Research</span>
+            <span class="chip">UX Writing</span>
+            <span class="chip">Editing</span>
+            <span class="chip">Analytics</span>
+          </div>
+        </section>
+
+        <section class="card mini">
+          <h2>Interests</h2>
+          <p class="subtle">Design history, behavioral econ, visual note‑taking, campus life.</p>
+        </section>
+      </aside>
+    </div>
+
+    <footer>
+      <small>© <span id="y"></span> Madison Rottman • <a href="#top">Back to top</a></small>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
